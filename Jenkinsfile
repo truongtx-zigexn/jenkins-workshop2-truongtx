@@ -62,21 +62,21 @@ pipeline {
             }
         }
 
-        stage('Deploy-firebase') {
-            steps {
-                echo '🚀 Deploying to Firebase...'
-                sh 'chmod +x deploy-firebase.sh'
-                sh './deploy-firebase.sh'
-            }
-        }
-
-        // stage('Deploy-firebase-adc') {
+        // stage('Deploy-firebase') {
         //     steps {
-        //         echo '🚀 Deploying to Firebase using ADC...'
-        //         sh 'chmod +x deploy-firebase-adc.sh'
-        //         sh './deploy-firebase-adc.sh'
+        //         echo '🚀 Deploying to Firebase...'
+        //         sh 'chmod +x deploy-firebase.sh'
+        //         sh './deploy-firebase.sh'
         //     }
         // }
+
+        stage('Deploy-firebase-adc') {
+            steps {
+                echo '🚀 Deploying to Firebase using ADC...'
+                sh 'chmod +x deploy-firebase-adc.sh'
+                sh './deploy-firebase-adc.sh'
+            }
+        }
     }
 
     post {
