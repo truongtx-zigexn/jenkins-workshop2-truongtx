@@ -62,20 +62,20 @@ pipeline {
         }
     }
 
-    post {
-        success {
-            slackSend(
-                channel: env.SLACK_CHANNEL,
-                color: 'good',
-                message: ":white_check_mark: ${env.BUILD_USER} deploy job ${JOB_NAME} #${BUILD_NUMBER} succeeded!\nFirebase: ${params.DEPLOY_TO_FIREBASE ? 'Deployed' : 'Skipped'}\nRemote: ${params.DEPLOY_TO_REMOTE ? 'Deployed' : 'Skipped'}"
-            )
-        }
-        failure {
-            slackSend(
-                channel: env.SLACK_CHANNEL,
-                color: 'danger',
-                message: ":x: ${env.BUILD_USER} deploy job ${JOB_NAME} #${BUILD_NUMBER} failed!\nCheck console log for details."
-            )
-        }
-    }
+    // post {
+    //     success {
+    //         slackSend(
+    //             channel: env.SLACK_CHANNEL,
+    //             color: 'good',
+    //             message: ":white_check_mark: ${env.BUILD_USER} deploy job ${JOB_NAME} #${BUILD_NUMBER} succeeded!\nFirebase: ${params.DEPLOY_TO_FIREBASE ? 'Deployed' : 'Skipped'}\nRemote: ${params.DEPLOY_TO_REMOTE ? 'Deployed' : 'Skipped'}"
+    //         )
+    //     }
+    //     failure {
+    //         slackSend(
+    //             channel: env.SLACK_CHANNEL,
+    //             color: 'danger',
+    //             message: ":x: ${env.BUILD_USER} deploy job ${JOB_NAME} #${BUILD_NUMBER} failed!\nCheck console log for details."
+    //         )
+    //     }
+    // }
 }
