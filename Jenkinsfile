@@ -17,7 +17,7 @@ pipeline {
     }
 
     environment {
-        FIREBASE_TOKEN = credentials('firebase-token')
+        // FIREBASE_TOKEN = credentials('firebase-token')
         SLACK_CHANNEL = '#lnd-2025-workshop'
     }
 
