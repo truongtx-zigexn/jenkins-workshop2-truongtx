@@ -53,7 +53,7 @@ pipeline {
 
         stage('Deploy to Remote') {
             steps {
-                sh 'echo deploy to remote'
+                sh 'echo deploy to remote test'
             }
         }
     }
