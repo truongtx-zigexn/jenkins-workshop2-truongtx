@@ -45,11 +45,11 @@ pipeline {
             }
         }
 
-        stage('Push-local') {
+        stage('Deploy-local') {
             steps {
                 echo '📦 Deploying to local container (remote_host)...'
-                sh 'chmod +x push-local.sh'
-                sh './push-local.sh'
+                sh 'chmod +x deploy-local.sh'
+                sh './deploy-local.sh'
             }
         }
 
