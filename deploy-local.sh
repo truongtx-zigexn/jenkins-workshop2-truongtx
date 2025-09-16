@@ -4,9 +4,8 @@
 # Uses Jenkins pipeline parameters and follows the same deployment pattern
 
 # Container connection details (for local deployment to remote-host container)
-CONTAINER_HOST="remote-host"
-SSH_PORT="22"
-SSH_USER="jenkins"
+CONTAINER_HOST="remote_host"
+SSH_USER="remote_user"
 SSH_KEY="/var/jenkins_home/ansible/remote-key"
 
 # Use Jenkins pipeline parameters (with defaults for local testing)
