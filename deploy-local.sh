@@ -44,7 +44,7 @@ ssh -o StrictHostKeyChecking=no -i "$SSH_KEY" "$SSH_USER@$CONTAINER_HOST" \
 echo "📁 Step 3: Creating release directory..."
 ssh -o StrictHostKeyChecking=no -i "$SSH_KEY" "$SSH_USER@$CONTAINER_HOST" bash -lc "
     set -euxo pipefail
-    RELEASE_DATE=\$(date -u +%Y%m%d)
+    RELEASE_DATE=$(date -u +%Y%m%d)
     mkdir -p '$TARGET_BASE/$YOUR_NAME/deploy/\${RELEASE_DATE}'
     echo \"RELEASE_DATE=\${RELEASE_DATE}\" > '$TARGET_BASE/$YOUR_NAME/deploy/.last_release'
 "
