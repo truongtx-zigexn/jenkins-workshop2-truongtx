@@ -79,20 +79,78 @@ pipeline {
         }
     }
 
-    // post {
-    //     success {
-    //         slackSend(
-    //             channel: env.SLACK_CHANNEL,
-    //             color: 'good',
-    //             message: ":white_check_mark: ${env.BUILD_USER} deploy job ${JOB_NAME} #${BUILD_NUMBER} succeeded!\nFirebase: ${params.DEPLOY_TO_FIREBASE ? 'Deployed' : 'Skipped'}\nRemote: ${params.DEPLOY_TO_REMOTE ? 'Deployed' : 'Skipped'}"
-    //         )
-    //     }
-    //     failure {
-    //         slackSend(
-    //             channel: env.SLACK_CHANNEL,
-    //             color: 'danger',
-    //             message: ":x: ${env.BUILD_USER} deploy job ${JOB_NAME} #${BUILD_NUMBER} failed!\nCheck console log for details."
-    //         )
-    //     }
-    // }
+    post {
+        success {
+            script {
+                def buildUser = 'truongtx'
+                def firebaseUrl = 'https://jenkins-lnd-workshop2-truongtx.web.app'
+                def timestamp = new Date().format('yyyy-MM-dd HH:mm:ss')
+
+                def message = """
+:rocket: *Deployment Successful!* :white_check_mark:
+
+*User:* ${buildUser}
+*Job:* ${JOB_NAME} #${BUILD_NUMBER}
+*Time:* ${timestamp}
+*Branch:* ${env.GIT_BRANCH ?: 'main'}
+
+*Deployment Status:*
+:globe_with_meridians: *Firebase:* <${firebaseUrl}|Live Site>
+:computer: *Remote Server:* <${remoteUrl}|View Deployment>
+:package: *Local Container:* Deployed
+
+*Build Details:*
+• Duration: ${currentBuild.durationString}
+• Commit: ${env.GIT_COMMIT?.take(7) ?: 'N/A'}
+
+:point_right: <${BUILD_URL}|View Build Log>
+                """.trim()
+
+                slackSend(
+                    channel: env.SLACK_CHANNEL,
+                    color: 'good',
+                    message: message
+                )
+            }
+        }
+        failure {
+            script {
+                def buildUser = 'truongtx'
+                def timestamp = new Date().format('yyyy-MM-dd HH:mm:ss')
+
+                def message = """
+:x: *Deployment Failed!* :warning:
+
+*User:* ${buildUser}
+*Job:* ${JOB_NAME} #${BUILD_NUMBER}
+*Time:* ${timestamp}
+*Branch:* ${env.GIT_BRANCH ?: 'main'}
+
+*Error Details:*
+• Duration: ${currentBuild.durationString}
+• Stage: ${env.FAILED_STAGE ?: 'Unknown'}
+• Commit: ${env.GIT_COMMIT?.take(7) ?: 'N/A'}
+
+:point_right: <${BUILD_URL}console|Check Console Log>
+:hammer_and_wrench: Please review the build logs for details.
+                """.trim()
+
+                slackSend(
+                    channel: env.SLACK_CHANNEL,
+                    color: 'danger',
+                    message: message
+                )
+            }
+        }
+        always {
+            script {
+                def buildUser = 'truongtx'
+                def status = currentBuild.result ?: 'SUCCESS'
+                def emoji = status == 'SUCCESS' ? ':tada:' : ':warning:'
+
+                echo "${emoji} Build ${status} for user ${buildUser}"
+                echo "Firebase URL: https://jenkins-lnd-workshop2-truongtx.web.app"
+            }
+        }
+    }
 }

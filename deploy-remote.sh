@@ -11,7 +11,7 @@ SSH_KEY="/var/jenkins_home/newbie_id_rsa"
 
 # Use Jenkins pipeline parameters (with defaults for local testing)
 TARGET_BASE="${TARGET_BASE:-/usr/share/nginx/html/jenkins}"
-YOUR_NAME="${YOUR_NAME:-truongtx}"
+YOUR_NAME="${YOUR_NAME:-truongtx2}"
 RETAIN_RELEASES="${RETAIN_RELEASES:-5}"
 
 echo "🌐 Deploying to remote server: $REMOTE_HOST:$SSH_PORT"
