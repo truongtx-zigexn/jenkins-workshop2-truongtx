@@ -24,36 +24,40 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                sh 'echo checkout'
+                echo '📦 Checking out code from GitHub...'
+                checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                sh 'echo build'
+                echo '🔨 Installing dependencies and building...'
+                sh 'chmod +x build.sh'
+                sh './build.sh'
             }
         }
 
-        stage('Lint & Test') {
+        stage('Test') {
             steps {
-                sh 'echo lint-test'
+                echo '🧪 Running tests...'
+                sh 'chmod +x test.sh'
+                sh './test.sh'
             }
         }
 
-        // stage('Deploy to Firebase') {
-        //     when {
-        //         expression { params.DEPLOY_TO_FIREBASE }
-        //     }
-        //     steps {
-        //         sh '''
-        //             firebase deploy --token "$FIREBASE_TOKEN" --project hoangnvh_workshop2
-        //         '''
-        //     }
-        // }
-
-        stage('Deploy to Remote') {
+        stage('Push-local') {
             steps {
-                sh 'echo deploy to remote test2'
+                echo '📦 Deploying to local container (remote_host)...'
+                sh 'chmod +x push-local.sh'
+                sh './push-local.sh'
+            }
+        }
+
+        stage('Push-remote') {
+            steps {
+                echo '📤 Deploying to remote server...'
+                sh 'chmod +x push-remote.sh'
+                sh './push-remote.sh'
             }
         }
     }
