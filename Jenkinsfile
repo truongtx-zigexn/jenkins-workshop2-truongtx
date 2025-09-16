@@ -82,7 +82,7 @@ pipeline {
     post {
         success {
             script {
-                def buildUser = 'truongtx'
+                def buildUser = 'Truong Tran'
                 def firebaseUrl = 'https://jenkins-lnd-workshop2-truongtx.web.app'
                 def timestamp = new Date().format('yyyy-MM-dd HH:mm:ss')
 
