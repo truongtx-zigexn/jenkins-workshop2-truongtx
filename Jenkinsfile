@@ -96,7 +96,6 @@ pipeline {
 
 *Deployment Status:*
 :globe_with_meridians: *Firebase:* <${firebaseUrl}|Live Site>
-:computer: *Remote Server:* <${remoteUrl}|View Deployment>
 :package: *Local Container:* Deployed
 
 *Build Details:*
