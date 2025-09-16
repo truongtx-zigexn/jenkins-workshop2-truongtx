@@ -53,11 +53,11 @@ pipeline {
             }
         }
 
-        stage('Push-remote') {
+        stage('Deploy-remote') {
             steps {
                 echo '📤 Deploying to remote server...'
-                sh 'chmod +x push-remote.sh'
-                sh './push-remote.sh'
+                sh 'chmod +x deploy-remote.sh'
+                sh './deploy-remote.sh'
             }
         }
     }
