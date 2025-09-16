@@ -36,7 +36,7 @@ pipeline {
 
         stage('Lint & Test') {
             steps {
-                sh 'echo lint & test'
+                sh 'echo lint-test'
             }
         }
 
