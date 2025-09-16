@@ -17,7 +17,7 @@ pipeline {
     }
 
     environment {
-        // FIREBASE_TOKEN = credentials('firebase-token')
+        FIREBASE_TOKEN = credentials('firebase-token')
         SLACK_CHANNEL = '#lnd-2025-workshop'
     }
 
@@ -58,6 +58,14 @@ pipeline {
                 echo '📤 Deploying to remote server...'
                 sh 'chmod +x deploy-remote.sh'
                 sh './deploy-remote.sh'
+            }
+        }
+
+        stage('Deploy-firebase') {
+            steps {
+                echo '🚀 Deploying to Firebase...'
+                sh 'chmod +x deploy-firebase.sh'
+                sh './deploy-firebase.sh'
             }
         }
     }
