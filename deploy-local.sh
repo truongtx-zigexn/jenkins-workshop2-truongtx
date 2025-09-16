@@ -44,9 +44,9 @@ ssh -o StrictHostKeyChecking=no -i "$SSH_KEY" "$SSH_USER@$CONTAINER_HOST" \
 echo "📁 Step 3: Creating release directory..."
 ssh -o StrictHostKeyChecking=no -i "$SSH_KEY" "$SSH_USER@$CONTAINER_HOST" bash -lc "
     set -euxo pipefail
-    RELEASE_DATE=$(date -u +%Y%m%d)
-    mkdir -p '$TARGET_BASE/$YOUR_NAME/deploy/\${RELEASE_DATE}'
-    echo \"RELEASE_DATE=\${RELEASE_DATE}\" > '$TARGET_BASE/$YOUR_NAME/deploy/.last_release'
+    RELEASE_DATE=\$(date -u +%Y%m%d_%H%M)
+    mkdir -p '$TARGET_BASE/$YOUR_NAME/deploy/'\$RELEASE_DATE
+    echo \"RELEASE_DATE=\$RELEASE_DATE\" > '$TARGET_BASE/$YOUR_NAME/deploy/.last_release'
 "
 
 # Step 4: Deploy files to release directory
@@ -56,7 +56,7 @@ ssh -o StrictHostKeyChecking=no -i "$SSH_KEY" "$SSH_USER@$CONTAINER_HOST" bash -
     RELEASE_DATE=\$(cat '$TARGET_BASE/$YOUR_NAME/deploy/.last_release' | cut -d= -f2)
     # Copy all web files to release directory
     cp -r '$TARGET_BASE/$YOUR_NAME/web-performance-project1-initial/'* \
-          '$TARGET_BASE/$YOUR_NAME/deploy/\${RELEASE_DATE}/'
+          '$TARGET_BASE/$YOUR_NAME/deploy/'\$RELEASE_DATE'/'
 "
 
 # Step 5: Update current symlink
@@ -64,7 +64,7 @@ echo "🔗 Step 5: Updating current symlink..."
 ssh -o StrictHostKeyChecking=no -i "$SSH_KEY" "$SSH_USER@$CONTAINER_HOST" bash -lc "
     set -euxo pipefail
     RELEASE_DATE=\$(cat '$TARGET_BASE/$YOUR_NAME/deploy/.last_release' | cut -d= -f2)
-    ln -sfn '$TARGET_BASE/$YOUR_NAME/deploy/\${RELEASE_DATE}' \
+    ln -sfn '$TARGET_BASE/$YOUR_NAME/deploy/'\$RELEASE_DATE \
             '$TARGET_BASE/$YOUR_NAME/deploy/current'
 "
 
