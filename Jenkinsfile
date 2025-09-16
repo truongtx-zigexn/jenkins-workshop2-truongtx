@@ -10,7 +10,7 @@ pipeline {
         string(name: 'SERVER_USER', defaultValue: 'newbie', description: 'Remote server user')
         string(name: 'SERVER_PORT', defaultValue: '3334', description: 'SSH port')
         string(name: 'TARGET_BASE', defaultValue: '/usr/share/nginx/html/jenkins', description: 'Base deployment path')
-        string(name: 'YOUR_NAME', defaultValue: 'truongtx', description: 'Your personal folder name')
+        string(name: 'YOUR_NAME', defaultValue: 'truongtx2', description: 'Your personal folder name')
         string(name: 'RETAIN_RELEASES', defaultValue: '5', description: 'Number of releases to keep')
         booleanParam(name: 'DEPLOY_TO_FIREBASE', defaultValue: false, description: 'Deploy to Firebase')
         booleanParam(name: 'DEPLOY_TO_REMOTE', defaultValue: true, description: 'Deploy to remote server')
@@ -18,6 +18,7 @@ pipeline {
 
     environment {
         FIREBASE_TOKEN = credentials('firebase-token')
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('firebase-adc')
         SLACK_CHANNEL = '#lnd-2025-workshop'
     }
 
@@ -61,11 +62,19 @@ pipeline {
             }
         }
 
-        stage('Deploy-firebase') {
+        // stage('Deploy-firebase') {
+        //     steps {
+        //         echo '🚀 Deploying to Firebase...'
+        //         sh 'chmod +x deploy-firebase.sh'
+        //         sh './deploy-firebase.sh'
+        //     }
+        // }
+
+        stage('Deploy-firebase-adc') {
             steps {
-                echo '🚀 Deploying to Firebase...'
-                sh 'chmod +x deploy-firebase.sh'
-                sh './deploy-firebase.sh'
+                echo '🚀 Deploying to Firebase using ADC...'
+                sh 'chmod +x deploy-firebase-adc.sh'
+                sh './deploy-firebase-adc.sh'
             }
         }
     }

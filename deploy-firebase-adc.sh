@@ -6,4 +6,4 @@
 # Firebase connection details (from Workshop2.md)
 
 cd web-performance-project1-initial
-firebase deploy --token "$FIREBASE_TOKEN" --only hosting
+firebase deploy --only hosting
